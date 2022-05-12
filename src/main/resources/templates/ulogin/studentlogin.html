@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="../js/login.js"></script>
+
+</head>
+<body>
+<div class="wrap">
+    <div class="container">
+
+        <div class="form-group">
+            <div class="cont_form_login"><a href="#"><i class="material-icons"></i></a>
+                <h1 style="color: white; margin: 0; text-align: center">个人信息管理系统登录</h1>
+
+                <form action="/userlogin/login" method="post" style="text-align:center;font-size: 5px;color: #f2dede">
+                    <label for="username"><input id="username" name="username" class="form-control" type="text" placeholder="用户名"
+                                                    onblur="checkInputforReg(this.id,regUserName,'您输入的用户名格式不正确,4-16个数字|字母|下划线|中文字符')"/>
+                      <span id="usernameTip" class="input_style"></span></label>
+
+                    <label for="userpwd"><input id="userpwd" name="userpwd" class="form-control" type="password" placeholder="密码"
+                                                   onblur="checkInputforReg(this.id,regPwd,'您输入的密码格式不正确,6～16位数字|字母|下划线')"/>
+                      <span id="userpwdTip" class="input_style"></span></label>
+
+                    <input class="btn_login" type="submit" onclick="cambiar_login()" value="登录"/>
+
+                </form>
+            </div>
+
+        </div>
+<!--        <p class="change_link" style="text-align: center">-->
+<!--            <span class="text">教师入口</span>-->
+<!--            <a href="/teacherlogin" class="to_login"> Go </a>-->
+<!--        </p>-->
+<!--        <p class="change_link" style="text-align: center">-->
+<!--            <span class="text">管理员入口</span>-->
+<!--            <a href="/adminlogin" class="to_login"> Go </a>-->
+<!--        </p>-->
+    </div>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+</body>
+</html>
+<script>
+    // 用户名的正则表达式设置,只能有4-16个数字，字母，下划线，和中文字符
+    var regUserName= /^[a-zA-Z0-9_]{4,16}$/;
+    //密码，6～16位。数字字母下划线
+    var regPwd = /^[a-zA-Z0-9_]{6,16}$/;
+    function $(id){
+        return document.getElementById(id);
+    }
+    function checkInputforReg(id,reg,msg){
+        var input=$(id);
+        if(!reg.test(input.value)){
+            $(id+"Tip").innerHTML=msg;
+            $(id+"Tip").className="text-danger";
+            return false;
+        }
+        else{
+            $(id+"Tip").innerHTML="√ ok";
+            $(id+"Tip").className="text-success";
+            return true;
+        }
+    }
+</script>

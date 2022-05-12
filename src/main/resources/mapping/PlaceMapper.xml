@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.information.dao.PlaceMapper" >
+  <resultMap id="BaseResultMap" type="com.information.entity.Place" >
+    <id column="PLID" property="plid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="plname" property="plname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PLID, id, plname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from place
+    where PLID = #{plid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from place
+    where plname = #{place}
+  </select>
+  <select id="getPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from place
+  </select>
+  <select id="selectLike" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from place
+    <where>
+      <if test="plname!= null">
+        plname LIKE CONCAT('%',#{plname},'%')
+      </if>
+    </where>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from place
+    where PLID = #{plid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.information.entity.Place" >
+    insert into place (PLID, id, plname
+      )
+    values (#{plid,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{plname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.information.entity.Place" >
+    insert into place
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="plid != null" >
+        PLID,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="plname != null" >
+        plname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="plid != null" >
+        #{plid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="plname != null" >
+        #{plname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.information.entity.Place" >
+    update place
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="plname != null" >
+        plname = #{plname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PLID = #{plid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.information.entity.Place" >
+    update place
+    set id = #{id,jdbcType=VARCHAR},
+      plname = #{plname,jdbcType=VARCHAR}
+    where PLID = #{plid,jdbcType=VARCHAR}
+  </update>
+</mapper>

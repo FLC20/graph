@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.information.dao.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.information.entity.Course" >
+    <id column="COID" property="coid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="coname" property="coname" jdbcType="VARCHAR" />
+    <result column="coscore" property="coscore" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    COID, id, coname, coscore
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where COID = #{coid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from course
+    where coname = #{nodename}
+  </select>
+
+  <select id="getPage" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from course
+  </select>
+
+  <select id="selectLike" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from course
+    <where>
+      <if test="coname!= null">
+        coname LIKE CONCAT('%',#{coname},'%')
+      </if>
+    </where>
+
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from course
+    where COID = #{coid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.information.entity.Course" >
+    insert into course (COID, coname,
+      coscore)
+    values (#{coid,jdbcType=VARCHAR},#{coname,jdbcType=VARCHAR},
+      #{coscore,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.information.entity.Course" >
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coid != null" >
+        COID,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="coname != null" >
+        coname,
+      </if>
+      <if test="coscore != null" >
+        coscore,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coid != null" >
+        #{coid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="coname != null" >
+        #{coname,jdbcType=VARCHAR},
+      </if>
+      <if test="coscore != null" >
+        #{coscore,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.information.entity.Course" >
+    update course
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="coname != null" >
+        coname = #{coname,jdbcType=VARCHAR},
+      </if>
+      <if test="coscore != null" >
+        coscore = #{coscore,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where COID = #{coid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.information.entity.Course" >
+    update course
+    set
+      coname = #{coname,jdbcType=VARCHAR},
+      coscore = #{coscore,jdbcType=VARCHAR}
+    where COID = #{coid,jdbcType=VARCHAR}
+  </update>
+</mapper>

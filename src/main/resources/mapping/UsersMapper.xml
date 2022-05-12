@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.information.dao.UsersMapper" >
+  <resultMap id="BaseResultMap" type="com.information.entity.Users" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="USID" property="usid" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="userschool" property="userschool" jdbcType="VARCHAR" />
+    <result column="usernum" property="usernum" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, USID, username, password, userschool, usernum, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey">
+    delete from users
+    where username = #{username}
+  </delete>
+
+  <insert id="insert" parameterType="com.information.entity.Users" >
+    insert into users (id, USID, username, 
+      password, userschool, usernum, 
+      type)
+    values (#{id,jdbcType=INTEGER}, #{usid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{userschool,jdbcType=VARCHAR}, #{usernum,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.information.entity.Users" >
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="usid != null" >
+        USID,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="userschool != null" >
+        userschool,
+      </if>
+      <if test="usernum != null" >
+        usernum,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="usid != null" >
+        #{usid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userschool != null" >
+        #{userschool,jdbcType=VARCHAR},
+      </if>
+      <if test="usernum != null" >
+        #{usernum,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.information.entity.Users" >
+    update users
+    <set >
+      <if test="usid != null" >
+        USID = #{usid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userschool != null" >
+        userschool = #{userschool,jdbcType=VARCHAR},
+      </if>
+      <if test="usernum != null" >
+        usernum = #{usernum,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.information.entity.Users" >
+    update users
+    set USID = #{usid,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      userschool = #{userschool,jdbcType=VARCHAR},
+      usernum = #{usernum,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from users
+    where username = #{username} and password = #{userpwd}
+  </select>
+  <select id="selectByTeacher" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from users
+    where username = #{teachername} and password = #{teacherpwd} and type = #{teacher}
+  </select>
+  <select id="selectByStudent" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from users
+    where username = #{studentname} and password = #{studentpwd} and type = #{student}
+  </select>
+  <select id="selectByAdmin" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from users
+    where username = #{adminname} and password = #{adminpwd} and type = #{admin}
+  </select>
+  <select id="selectByTName" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from users
+    where username = #{teachername}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from users
+  </select>
+
+  <select id="selectByUid" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from users
+    where USID = #{stid}
+  </select>
+
+  <select id="getUserByPage" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from users
+  </select>
+
+  <insert id="insertUser" parameterType="com.information.entity.Users" >
+    insert into users (USID, username,
+                       password, userschool, usernum,
+                       type)
+    values (#{stid}, #{stuname},
+            #{password}, #{school}, #{stunum},
+            #{type})
+  </insert>
+
+  <update id="updateuser" parameterType="com.information.entity.Users" >
+    update users
+    set
+      password = #{userpwd}
+    where username = #{username}
+  </update>
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.information.dao.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.information.entity.Department" >
+    <id column="DEID" property="deid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="dename" property="dename" jdbcType="VARCHAR" />
+    <result column="detime" property="detime" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.information.entity.DepartmentWithBLOBs" extends="BaseResultMap" >
+    <result column="defrom" property="defrom" jdbcType="LONGVARCHAR" />
+    <result column="delevel" property="delevel" jdbcType="LONGVARCHAR" />
+    <result column="deawards" property="deawards" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DEID, id, dename, detime
+  </sql>
+  <sql id="Blob_Column_List" >
+    defrom, delevel, deawards
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from department
+    where DEID = #{deid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByName" resultMap="ResultMapWithBLOBs" >
+    select
+      DEID, id, dename,
+      detime, defrom, delevel,
+      deawards
+      from department
+    where dename = #{department}
+  </select>
+  <select id="getPage" resultMap="ResultMapWithBLOBs" >
+    select
+      DEID, id, dename,
+      detime, defrom, delevel,
+      deawards
+    from department
+  </select>
+  <select id="selectLike" resultMap="ResultMapWithBLOBs" >
+    select
+      DEID, id, dename,
+      detime, defrom, delevel,
+      deawards
+    from department
+    <where>
+      <if test="dename!= null">
+        dename LIKE CONCAT('%',#{dename},'%')
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from department
+    where DEID = #{deid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.information.entity.DepartmentWithBLOBs" >
+    insert into department (DEID, dename,
+      detime, defrom, delevel, 
+      deawards)
+    values (#{deid,jdbcType=VARCHAR},#{dename,jdbcType=VARCHAR},
+      #{detime,jdbcType=VARCHAR}, #{defrom,jdbcType=LONGVARCHAR}, #{delevel,jdbcType=LONGVARCHAR}, 
+      #{deawards,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.information.entity.DepartmentWithBLOBs" >
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deid != null" >
+        DEID,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dename != null" >
+        dename,
+      </if>
+      <if test="detime != null" >
+        detime,
+      </if>
+      <if test="defrom != null" >
+        defrom,
+      </if>
+      <if test="delevel != null" >
+        delevel,
+      </if>
+      <if test="deawards != null" >
+        deawards,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deid != null" >
+        #{deid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dename != null" >
+        #{dename,jdbcType=VARCHAR},
+      </if>
+      <if test="detime != null" >
+        #{detime,jdbcType=VARCHAR},
+      </if>
+      <if test="defrom != null" >
+        #{defrom,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="delevel != null" >
+        #{delevel,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="deawards != null" >
+        #{deawards,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.information.entity.DepartmentWithBLOBs" >
+    update department
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dename != null" >
+        dename = #{dename,jdbcType=VARCHAR},
+      </if>
+      <if test="detime != null" >
+        detime = #{detime,jdbcType=VARCHAR},
+      </if>
+      <if test="defrom != null" >
+        defrom = #{defrom,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="delevel != null" >
+        delevel = #{delevel,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="deawards != null" >
+        deawards = #{deawards,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where DEID = #{deid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.information.entity.DepartmentWithBLOBs" >
+    update department
+    set
+      dename = #{dename,jdbcType=VARCHAR},
+      detime = #{detime,jdbcType=VARCHAR},
+      defrom = #{defrom,jdbcType=LONGVARCHAR},
+      delevel = #{delevel,jdbcType=LONGVARCHAR},
+      deawards = #{deawards,jdbcType=LONGVARCHAR}
+    where DEID = #{deid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.information.entity.Department" >
+    update department
+    set id = #{id,jdbcType=VARCHAR},
+      dename = #{dename,jdbcType=VARCHAR},
+      detime = #{detime,jdbcType=VARCHAR}
+    where DEID = #{deid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.information.dao.SchoolsMapper" >
+  <resultMap id="BaseResultMap" type="com.information.entity.Schools" >
+    <id column="SCID" property="scid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="scname" property="scname" jdbcType="VARCHAR" />
+    <result column="scplace" property="scplace" jdbcType="VARCHAR" />
+    <result column="sctype" property="sctype" jdbcType="VARCHAR" />
+    <result column="sctime" property="sctime" jdbcType="VARCHAR" />
+    <result column="school_motto" property="schoolMotto" jdbcType="VARCHAR" />
+    <result column="school_spirit" property="schoolSpirit" jdbcType="VARCHAR" />
+    <result column="teaching_style" property="teachingStyle" jdbcType="VARCHAR" />
+    <result column="style_of_study" property="styleOfStudy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SCID, id, scname, scplace, sctype, sctime, school_motto, school_spirit, teaching_style, 
+    style_of_study
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from schools
+    where SCID = #{scid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from schools
+    where scname = #{school}
+  </select>
+  <select id="getPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from schools
+  </select>
+  <select id="selectLike" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from schools
+    <where>
+      <if test="scname!= null">
+        scname LIKE CONCAT('%',#{scname},'%')
+      </if>
+    </where>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from schools
+    where SCID = #{scid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.information.entity.Schools" >
+    insert into schools (SCID, id, scname, 
+      scplace, sctype, sctime, 
+      school_motto, school_spirit, teaching_style, 
+      style_of_study)
+    values (#{scid,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{scname,jdbcType=VARCHAR}, 
+      #{scplace,jdbcType=VARCHAR}, #{sctype,jdbcType=VARCHAR}, #{sctime,jdbcType=VARCHAR}, 
+      #{schoolMotto,jdbcType=VARCHAR}, #{schoolSpirit,jdbcType=VARCHAR}, #{teachingStyle,jdbcType=VARCHAR}, 
+      #{styleOfStudy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.information.entity.Schools" >
+    insert into schools
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scid != null" >
+        SCID,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="scname != null" >
+        scname,
+      </if>
+      <if test="scplace != null" >
+        scplace,
+      </if>
+      <if test="sctype != null" >
+        sctype,
+      </if>
+      <if test="sctime != null" >
+        sctime,
+      </if>
+      <if test="schoolMotto != null" >
+        school_motto,
+      </if>
+      <if test="schoolSpirit != null" >
+        school_spirit,
+      </if>
+      <if test="teachingStyle != null" >
+        teaching_style,
+      </if>
+      <if test="styleOfStudy != null" >
+        style_of_study,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scid != null" >
+        #{scid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="scname != null" >
+        #{scname,jdbcType=VARCHAR},
+      </if>
+      <if test="scplace != null" >
+        #{scplace,jdbcType=VARCHAR},
+      </if>
+      <if test="sctype != null" >
+        #{sctype,jdbcType=VARCHAR},
+      </if>
+      <if test="sctime != null" >
+        #{sctime,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolMotto != null" >
+        #{schoolMotto,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolSpirit != null" >
+        #{schoolSpirit,jdbcType=VARCHAR},
+      </if>
+      <if test="teachingStyle != null" >
+        #{teachingStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="styleOfStudy != null" >
+        #{styleOfStudy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.information.entity.Schools" >
+    update schools
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="scname != null" >
+        scname = #{scname,jdbcType=VARCHAR},
+      </if>
+      <if test="scplace != null" >
+        scplace = #{scplace,jdbcType=VARCHAR},
+      </if>
+      <if test="sctype != null" >
+        sctype = #{sctype,jdbcType=VARCHAR},
+      </if>
+      <if test="sctime != null" >
+        sctime = #{sctime,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolMotto != null" >
+        school_motto = #{schoolMotto,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolSpirit != null" >
+        school_spirit = #{schoolSpirit,jdbcType=VARCHAR},
+      </if>
+      <if test="teachingStyle != null" >
+        teaching_style = #{teachingStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="styleOfStudy != null" >
+        style_of_study = #{styleOfStudy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SCID = #{scid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.information.entity.Schools" >
+    update schools
+    set id = #{id,jdbcType=VARCHAR},
+      scname = #{scname,jdbcType=VARCHAR},
+      scplace = #{scplace,jdbcType=VARCHAR},
+      sctype = #{sctype,jdbcType=VARCHAR},
+      sctime = #{sctime,jdbcType=VARCHAR},
+      school_motto = #{schoolMotto,jdbcType=VARCHAR},
+      school_spirit = #{schoolSpirit,jdbcType=VARCHAR},
+      teaching_style = #{teachingStyle,jdbcType=VARCHAR},
+      style_of_study = #{styleOfStudy,jdbcType=VARCHAR}
+    where SCID = #{scid,jdbcType=VARCHAR}
+  </update>
+</mapper>

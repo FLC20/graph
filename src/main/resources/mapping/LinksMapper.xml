@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.information.dao.LinksMapper" >
+  <resultMap id="BaseResultMap" type="com.information.entity.Links" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, source, target, value
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from links
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from links
+  </select>
+  <select id="selectLinkAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from links
+  </select>
+  <select id="selectBySourceId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from links
+    where source = #{teid} or target = #{teid}
+  </select>
+  <select id="selectByIDAndVal" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from links
+    where source = #{teid} and value = #{val}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from links
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delLinkByID" >
+    delete from links
+    where source = #{stid} or target = #{stid}
+  </delete>
+
+  <delete id="delLinkByUIDAndVAL" >
+    delete from links
+    where source = #{teid} and value = #{val}
+  </delete>
+
+  <insert id="insertLink" parameterType="com.information.entity.Links" >
+    insert into links ( source, target,
+                       value)
+    values (#{stid,jdbcType=VARCHAR}, #{maid,jdbcType=VARCHAR},
+            #{val,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insert" parameterType="com.information.entity.Links" >
+    insert into links (id, source, target, 
+      value)
+    values (#{id,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.information.entity.Links" >
+    insert into links
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="target != null" >
+        target,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.information.entity.Links" >
+    update links
+    <set >
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        target = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.information.entity.Links" >
+    update links
+    set source = #{source,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByID" parameterType="com.information.entity.Links" >
+    update links
+    set source = #{sid},
+        target = #{fid}
+    where id = #{id}
+  </update>
+
+</mapper>

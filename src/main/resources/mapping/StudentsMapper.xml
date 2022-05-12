@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.information.dao.StudentsMapper" >
+  <resultMap id="BaseResultMap" type="com.information.entity.Students" >
+    <id column="STID" property="stid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="stuname" property="stuname" jdbcType="VARCHAR" />
+    <result column="stunum" property="stunum" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+    <result column="political" property="political" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="lauguage_ability" property="lauguageAbility" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    STID, id, stuname, stunum, sex, age, nation, political, telephone, lauguage_ability
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from students
+    where STID = #{stid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from students
+    where STID = #{stid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.information.entity.Students" >
+    insert into students (STID, id, stuname, 
+      stunum, sex, age, nation, 
+      political, telephone, lauguage_ability
+      )
+    values (#{stid,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{stuname,jdbcType=VARCHAR}, 
+      #{stunum,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
+      #{political,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{lauguageAbility,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.information.entity.Students" >
+    insert into students
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stid != null" >
+        STID,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stuname != null" >
+        stuname,
+      </if>
+      <if test="stunum != null" >
+        stunum,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="political != null" >
+        political,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="lauguageAbility != null" >
+        lauguage_ability,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stid != null" >
+        #{stid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null" >
+        #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stunum != null" >
+        #{stunum,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="political != null" >
+        #{political,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="lauguageAbility != null" >
+        #{lauguageAbility,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.information.entity.Students" >
+    update students
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null" >
+        stuname = #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stunum != null" >
+        stunum = #{stunum,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="political != null" >
+        political = #{political,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="lauguageAbility != null" >
+        lauguage_ability = #{lauguageAbility,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where STID = #{stid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.information.entity.Students" >
+    update students
+    set id = #{id,jdbcType=VARCHAR},
+      stuname = #{stuname,jdbcType=VARCHAR},
+      stunum = #{stunum,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      political = #{political,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      lauguage_ability = #{lauguageAbility,jdbcType=VARCHAR}
+    where STID = #{stid,jdbcType=VARCHAR}
+  </update>
+</mapper>

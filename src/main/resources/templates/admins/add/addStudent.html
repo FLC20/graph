@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+    <title>管理员</title>
+
+
+
+    <script src="../dist/modules/jquery.min.js"></script>
+    <script src="../dist/modules/popper.js"></script>
+    <script src="../dist/modules/tooltip.js"></script>
+    <script src="../dist/modules/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../dist/modules/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="../dist/modules/scroll-up-bar/dist/scroll-up-bar.min.js"></script>
+    <script src="../dist/js/sa-functions.js"></script>
+
+    <script src="../dist/modules/chart.min.js"></script>
+    <script src="../dist/modules/summernote/summernote-lite.js"></script>
+
+    <link rel="stylesheet" href="../dist/modules/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/modules/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="../dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
+
+    <link rel="stylesheet" href="../dist/modules/summernote/summernote-lite.css">
+    <link rel="stylesheet" href="../dist/modules/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../dist/css/demo.css">
+    <link rel="stylesheet" href="../dist/css/style.css">
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+
+
+</head>
+
+<body>
+<div id="app">
+    <div class="main-wrapper">
+        <div class="navbar-bg"></div>
+        <nav class="navbar navbar-expand-lg main-navbar">
+
+
+            <form class="form-inline mr-auto">
+                <ul class="navbar-nav mr-3">
+                    <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
+                </ul>
+            </form>
+        </nav>
+
+        <div class="main-sidebar">
+            <aside id="sidebar-wrapper">
+
+                <div class="sidebar-brand">
+                    <a>个人信息管理系统</a>
+                </div>
+
+                <div class="sidebar-user">
+                    <div class="sidebar-user-picture">
+                        <img alt="image" src="../dist/img/avatar/avatar-1.jpeg">
+                    </div>
+                    <div class="sidebar-user-details">
+                        <div class="user-name">
+                            <span id="name"></span>
+                        </div>
+                        <div class="user-role">
+                            管理员
+                        </div>
+                    </div>
+                </div>
+                <ul class="sidebar-menu">
+                    <li><a href="/graph/showadmin"><i class="ion ion-ios-circle-outline"></i>首页</a></li>
+                    <li>
+                        <a href="#" class="has-dropdown"><i class="ion ion-ios-copy-outline"></i><span>用户管理</span></a>
+                        <ul class="menu-dropdown">
+                            <li><a href="/userlogin/allusers"><i class="ion ion-ios-circle-outline"></i> 用户列表</a></li>
+                            <li><a href="/userlogin/alluser"><i class="ion ion-ios-circle-outline"></i> 重置密码</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#" class="has-dropdown"><i class="ion ion-ios-copy-outline"></i><span>节点管理</span></a>
+                        <ul class="menu-dropdown">
+                            <li><a href="/admin/stlist"><i class="ion ion-ios-circle-outline"></i> 学生管理</a></li>
+                            <li><a href="/admin/telist"><i class="ion ion-ios-circle-outline"></i> 教师管理</a></li>
+                            <li><a href="/admin/colist"><i class="ion ion-ios-circle-outline"></i> 课程管理</a></li>
+                            <li><a href="/admin/delist"><i class="ion ion-ios-circle-outline"></i> 部门管理</a></li>
+                            <li><a href="/admin/malist"><i class="ion ion-ios-circle-outline"></i> 专业管理</a></li>
+                            <li><a href="/admin/sclist"><i class="ion ion-ios-circle-outline"></i> 学校管理</a></li>
+                            <li><a href="/admin/pllist"><i class="ion ion-ios-circle-outline"></i> 籍贯管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/userlogin/userlist"><i class="ion ion-ios-circle-outline"></i>重置密码</a></li>
+                    <li><a href="http://localhost:8080/repassword"><i class="ion ion-ios-circle-outline"></i>修改密码</a></li>
+                    <li><a href="/userlogin/logout"><i class="ion ion-ios-circle-outline"></i>退出系统</a></li>
+
+                </ul>
+            </aside>
+        </div>
+
+        <div class="main-content">
+            <section class="section">
+                <h1 class="section-header">
+                    <div>添加学生信息</div>
+                </h1>
+                <div id="add">
+                    <div class="form-group">
+                        <label for="stid" class="col-sm-2 control-label">STID</label>
+                        <div class="col-sm-10">
+                            <input id="stid" name="stid" type="text"
+                                   class="form-control" v-model="stid"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="stuname" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input id="stuname" name="stuname" type="text"
+                                   class="form-control" v-model="stuname"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="school" class="col-sm-2 control-label">学校</label>
+                        <div class="col-sm-10">
+                            <input  id="school" name="school" type="text"
+                                   class="form-control"  v-model="school">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="stunum" class="col-sm-2 control-label">学号</label>
+                        <div class="col-sm-10">
+                            <input id="stunum" name="stunum" type="text"
+                                   class="form-control" v-model="stunum"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sex" class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-10">
+                            <input type="radio" id="sex" name="sex" v-model="sex"
+                                   value="男" >男
+                            <input type="radio" id="sex" name="sex" v-model="sex"
+                                   value="女" >女
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="age" class="col-sm-2 control-label">年龄</label>
+                        <div class="col-sm-10">
+                            <input id="age" name="age" type="text"
+                                   class="form-control" v-model="age"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nation" class="col-sm-2 control-label">民族</label>
+                        <div class="col-sm-10">
+                            <input id="nation" name="nation" type="text"
+                                   class="form-control" v-model="nation"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="place" class="col-sm-2 control-label">籍贯</label>
+                        <div class="col-sm-10">
+                            <input id="place" name="place" type="text"
+                                   class="form-control" v-model="place"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone" class="col-sm-2 control-label">联系电话</label>
+                        <div class="col-sm-10">
+                            <input id="telephone" name="telephone" type="text"
+                                   class="form-control" v-model="telephone"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="political" class="col-sm-2 control-label">政治面貌</label>
+                        <div class="col-sm-10">
+                            <input type="radio" id="political" name="political" v-model="political"
+                                   value="正式党员" >正式党员
+                            <input type="radio" id="political" name="political" v-model="political"
+                                   value="预备党员" >预备党员
+                            <input type="radio"  id="political" name="political" v-model="political"
+                                   value="共青团员" >共青团员
+                            <input type="radio"  id="political" name="political" v-model="political"
+                                   value="群众" >群众
+                            <input type="radio"  id="political" name="political" v-model="political"
+                                   value="其他党派人士" >其他党派人士
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="major" class="col-sm-2 control-label">专业</label>
+                        <div class="col-sm-10">
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="应用经济学" >应用经济学
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="计算机科学与技术" >计算机科学与技术
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="法学" >法学
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="马克思主义理论" >马克思主义理论
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="力学" >力学
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="机械工程" >机械工程
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lauguageAbility" class="col-sm-2 control-label">CET水平</label>
+                        <div class="col-sm-10">
+                            <input type="radio" id="lauguageAbility" name="lauguageAbility" v-model="lauguageAbility"
+                                   value="无" >无
+                            <input type="radio" id="lauguageAbility" name="lauguageAbility" v-model="lauguageAbility"
+                                   value="CET4" >CET4
+                            <input type="radio" id="lauguageAbility" name="lauguageAbility" v-model="lauguageAbility"
+                                   value="CET6" >CET6
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" class="btn btn-danger" @click="submitForm()">添加</button>
+                    </div>
+                </div>
+        </div>
+        </section>
+    </div>
+</div>
+</div>
+<script>
+    $(".nav li").click(function () {
+        $(this).css({"backgroundColor":"#eeeeee","border-bottom":"3px solid #2aabd2"});
+        $(this).siblings().css({"backgroundColor":"#333333","border-bottom":"0px"});
+    })
+
+    $.getJSON('/userlogin/getUserName',
+        function(data) {
+            $('#name').html(data.Username);
+        });
+</script>
+<script>
+    new Vue({
+        el:"#add",
+        data:{
+            stid:"",
+            stuname:"",
+            school:"",
+            stunum:"",
+            sex:"",
+            political:"",
+
+            telephone:"",
+            age:"",
+            nation:"",
+            major:"",
+
+            lauguageAbility:"",
+            place:"",
+
+            errMsg:""
+        },
+        methods:{
+            submitForm:function(){
+                //封装表单参数
+                const formDate=new FormData();
+                //
+                formDate.append("stid",this.stid);
+                formDate.append("stuname",this.stuname);
+                formDate.append("school",this.school);
+                formDate.append("stunum",this.stunum);
+                formDate.append("sex",this.sex);
+                formDate.append("political",this.political);
+
+                formDate.append("telephone",this.telephone);
+                formDate.append("age",this.age);
+                formDate.append("nation",this.nation);
+                formDate.append("major",this.major);
+
+                formDate.append("lauguageAbility",this.lauguageAbility);
+                formDate.append("place",this.place);
+                axios
+                    .post('http://localhost:8080/admin/stadd',formDate)
+                    .then(response =>{
+                        if(response.data.result){
+                            alert("添加成功！");
+                            window.location="http://localhost:8080/admin/stlist";
+                        }else{
+                            alert(response.data.errMsg);
+                        }
+                    })
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            },
+        }
+    })
+</script>
+<script src="../dist/js/scripts.js"></script>
+<script src="../dist/js/custom.js"></script>
+<script src="../dist/js/demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+    <title>管理员</title>
+
+
+
+    <script src="../dist/modules/jquery.min.js"></script>
+    <script src="../dist/modules/popper.js"></script>
+    <script src="../dist/modules/tooltip.js"></script>
+    <script src="../dist/modules/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../dist/modules/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="../dist/modules/scroll-up-bar/dist/scroll-up-bar.min.js"></script>
+    <script src="../dist/js/sa-functions.js"></script>
+
+    <script src="../dist/modules/chart.min.js"></script>
+    <script src="../dist/modules/summernote/summernote-lite.js"></script>
+
+    <link rel="stylesheet" href="../dist/modules/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/modules/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="../dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
+
+    <link rel="stylesheet" href="../dist/modules/summernote/summernote-lite.css">
+    <link rel="stylesheet" href="../dist/modules/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../dist/css/demo.css">
+    <link rel="stylesheet" href="../dist/css/style.css">
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+
+
+</head>
+
+<body>
+<div id="app">
+    <div class="main-wrapper">
+        <div class="navbar-bg"></div>
+        <nav class="navbar navbar-expand-lg main-navbar">
+
+
+            <form class="form-inline mr-auto">
+                <ul class="navbar-nav mr-3">
+                    <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
+                </ul>
+            </form>
+        </nav>
+
+        <div class="main-sidebar">
+            <aside id="sidebar-wrapper">
+
+                <div class="sidebar-brand">
+                    <a>个人信息管理系统</a>
+                </div>
+
+                <div class="sidebar-user">
+                    <div class="sidebar-user-picture">
+                        <img alt="image" src="../dist/img/avatar/avatar-1.jpeg">
+                    </div>
+                    <div class="sidebar-user-details">
+                        <div class="user-name">
+                            <span id="name"></span>
+                        </div>
+                        <div class="user-role">
+                            管理员
+                        </div>
+                    </div>
+                </div>
+                <ul class="sidebar-menu">
+                    <li><a href="/graph/showadmin"><i class="ion ion-ios-circle-outline"></i>首页</a></li>
+                    <li>
+                        <a href="#" class="has-dropdown"><i class="ion ion-ios-copy-outline"></i><span>用户管理</span></a>
+                        <ul class="menu-dropdown">
+                            <li><a href="/userlogin/allusers"><i class="ion ion-ios-circle-outline"></i> 用户列表</a></li>
+                            <li><a href="/userlogin/alluser"><i class="ion ion-ios-circle-outline"></i> 重置密码</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#" class="has-dropdown"><i class="ion ion-ios-copy-outline"></i><span>节点管理</span></a>
+                        <ul class="menu-dropdown">
+                            <li><a href="/admin/stlist"><i class="ion ion-ios-circle-outline"></i> 学生管理</a></li>
+                            <li><a href="/admin/telist"><i class="ion ion-ios-circle-outline"></i> 教师管理</a></li>
+                            <li><a href="/admin/colist"><i class="ion ion-ios-circle-outline"></i> 课程管理</a></li>
+                            <li><a href="/admin/delist"><i class="ion ion-ios-circle-outline"></i> 部门管理</a></li>
+                            <li><a href="/admin/malist"><i class="ion ion-ios-circle-outline"></i> 专业管理</a></li>
+                            <li><a href="/admin/sclist"><i class="ion ion-ios-circle-outline"></i> 学校管理</a></li>
+                            <li><a href="/admin/pllist"><i class="ion ion-ios-circle-outline"></i> 籍贯管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/userlogin/userlist"><i class="ion ion-ios-circle-outline"></i>重置密码</a></li>
+                    <li><a href="http://localhost:8080/repassword"><i class="ion ion-ios-circle-outline"></i>修改密码</a></li>
+                    <li><a href="/userlogin/logout"><i class="ion ion-ios-circle-outline"></i>退出系统</a></li>
+
+                </ul>
+            </aside>
+        </div>
+
+        <div class="main-content">
+            <section class="section">
+                <h1 class="section-header">
+                    <div>修改教师信息</div>
+                </h1>
+                <div id="add">
+                    <div class="form-group">
+                        <label for="teName" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input id="teName" name="teName" type="text" th:placeholder=${teachers.teName} disabled
+                                   class="form-control" v-model="teName"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="school" class="col-sm-2 control-label">学校</label>
+                        <div class="col-sm-10">
+                            <input  id="school" name="school" type="text" th:placeholder="${teachers.school}"
+                                    class="form-control"  v-model="school">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="teNum" class="col-sm-2 control-label">教工号</label>
+                        <div class="col-sm-10">
+                            <input id="teNum" name="teNum" type="text" th:placeholder=${teachers.teNum} disabled
+                                   class="form-control" v-model="teNum"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="teTitle" class="col-sm-2 control-label">职称</label>
+                        <div class="col-sm-10">
+                            <table class="table table-striped">
+                                <tr><td th:text="${teachers.teTitle}"></td></tr>
+                            </table>
+                            <input type="radio" id="teTitle" name="teTitle" v-model="teTitle"
+                                   value="教授" >教授
+                            <input type="radio" id="teTitle" name="teTitle" v-model="teTitle"
+                                   value="副教授" >副教授
+                            <input type="radio" id="teTitle" name="teTitle" v-model="teTitle"
+                                   value="讲师" >讲师
+                            <input type="radio" id="teTitle" name="teTitle" v-model="teTitle"
+                                   value="研究员" >研究员
+                            <input type="radio" id="teTitle" name="teTitle" v-model="teTitle"
+                                   value="高级实验师" >高级实验师
+                            <input type="radio" id="teTitle" name="teTitle" v-model="teTitle"
+                                   value="高级工程师" >高级工程师
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="department" class="col-sm-2 control-label">部门</label>
+                        <div class="col-sm-10">
+                            <table class="table table-striped">
+                                <tr><td th:text="${teachers.department}"></td></tr>
+                            </table>
+                            <input type="radio" id="department" name="department" v-model="department"
+                                   value="经济管理学院" >经济管理学院
+                            <input type="radio" id="department" name="department" v-model="department"
+                                   value="计算机学院、保密学院、软件学院" >计算机学院、保密学院、软件学院
+                            <input type="radio"  id="department" name="department" v-model="department"
+                                   value="研究生院" >研究生院
+                            <input type="radio"  id="department" name="department" v-model="department"
+                                   value="人文社会科学学院" >人文社会科学学院
+                            <input type="radio"  id="department" name="department" v-model="department"
+                                   value="马克思主义学院" >马克思主义学院
+                            <input type="radio"  id="department" name="department" v-model="department"
+                                   value="党委学生工作部（处）" >党委学生工作部（处）
+                            <input type="radio"  id="department" name="department" v-model="department"
+                                   value="烟台研究院" >烟台研究院
+                            <input type="radio"  id="department" name="department" v-model="department"
+                                   value="青岛创新发展基地" >青岛创新发展基地
+                            <input type="radio"  id="department" name="department" v-model="department"
+                                   value="航天与建筑工程学院" >航天与建筑工程学院
+                            <input type="radio"  id="department" name="department" v-model="department"
+                                   value="工程训练中心" >工程训练中心
+                            <input type="radio"  id="department" name="department" v-model="department"
+                                   value="机电工程学院" >机电工程学院
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="teTelephone" class="col-sm-2 control-label">联系电话</label>
+                        <div class="col-sm-10">
+                            <input id="teTelephone" name="teTelephone" type="text" th:placeholder=${teachers.teTelephone}
+                                   class="form-control" v-model="teTelephone"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-sm-2 control-label">联系邮箱</label>
+                        <div class="col-sm-10">
+                            <input id="email" name="email" type="text" th:placeholder=${teachers.email}
+                                   class="form-control" v-model="email"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="postcode" class="col-sm-2 control-label">邮编</label>
+                        <div class="col-sm-10">
+                            <input id="postcode" name="postcode" type="text" th:placeholder=${teachers.postcode}
+                                   class="form-control" v-model="postcode"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="teIdentity" class="col-sm-2 control-label">研究方向</label>
+                        <div class="col-sm-10">
+                            <input id="teIdentity" name="teIdentity" type="text" th:placeholder=${teachers.teIdentity}
+                                   class="form-control" v-model="teIdentity"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="major" class="col-sm-2 control-label">专业</label>
+                        <div class="col-sm-10">
+                            <table class="table table-striped">
+                                <tr><td th:text="${teachers.major}"></td></tr>
+                            </table>
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="应用经济学" >应用经济学
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="计算机科学与技术" >计算机科学与技术
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="法学" >法学
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="马克思主义理论" >马克思主义理论
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="力学" >力学
+                            <input type="radio" id="major" name="major" v-model="major"
+                                   value="机械工程" >机械工程
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="awards" class="col-sm-2 control-label">获奖情况</label>
+                        <div class="col-sm-10">
+                            <input id="awards" name="awards" type="text" th:placeholder=${teachers.awards}
+                                   class="form-control" v-model="awards"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="achievements" class="col-sm-2 control-label">论著成果</label>
+                        <div class="col-sm-10">
+                            <input id="achievements" name="achievements" type="text" th:placeholder=${teachers.achievements}
+                                   class="form-control" v-model="achievements"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-danger" @click="submitForm()">修改</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    $(".nav li").click(function () {
+        $(this).css({"backgroundColor":"#eeeeee","border-bottom":"3px solid #2aabd2"});
+        $(this).siblings().css({"backgroundColor":"#333333","border-bottom":"0px"});
+    })
+
+    $.getJSON('/userlogin/getUserName',
+        function(data) {
+            $('#name').html(data.Username);
+        });
+</script>
+<script>
+    new Vue({
+        el:"#add",
+        data:{
+            teName:"",
+            school:"",
+            teNum:"",
+            teTitle:"",
+            department:"",
+
+            teTelephone:"",
+            email:"",
+            postcode:"",
+            teIdentity:"",
+            major:"",
+
+            awards:"",
+            achievements:"",
+
+            errMsg:""
+        },
+        created() {
+            var teName=$("#teName").attr('placeholder');
+            var teNum=$("#teNum").attr('placeholder');
+            var teTelephone=$("#teTelephone").attr('placeholder');
+            var email=$("#email").attr('placeholder');
+            var postcode=$("#postcode").attr('placeholder');
+            var teIdentity=$("#teIdentity").attr('placeholder');
+            var awards=$("#awards").attr('placeholder');
+            var achievements=$("#achievements").attr('placeholder');
+            var school=$("#school").attr('placeholder');
+            this.teName=teName;
+            this.teNum=teNum;
+            if(school!==undefined){this.school=school;}
+            if(teTelephone!==undefined){this.teTelephone=teTelephone;}
+            if(email!==undefined){this.email=email;}
+            if(postcode!==undefined){this.postcode=postcode;}
+            if(teTelephone!==undefined){this.teIdentity=teIdentity;}
+            if(awards!==undefined){this.awards=awards;}
+            if(achievements!==undefined){this.achievements=achievements;}
+        },
+        methods:{
+            submitForm:function(){
+                //封装表单参数
+                const formDate=new FormData();
+                //
+                formDate.append("teName",this.teName);
+                formDate.append("school",this.school);
+                formDate.append("teNum",this.teNum);
+                formDate.append("teTitle",this.teTitle);
+                formDate.append("department",this.department);
+
+                formDate.append("teTelephone",this.teTelephone);
+                formDate.append("email",this.email);
+                formDate.append("postcode",this.postcode);
+                formDate.append("teIdentity",this.teIdentity);
+                formDate.append("major",this.major);
+
+                formDate.append("awards",this.awards);
+                formDate.append("achievements",this.achievements);
+                axios
+                    .post('http://localhost:8080/admin/teupdate',formDate)
+                    .then(response =>{
+                        if(response.data.result){
+                            alert("更新成功！");
+                            window.location="http://localhost:8080/admin/telist";
+                        }else{
+                            alert(response.data.errMsg);
+                        }
+                    })
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            },
+        }
+    })
+</script>
+<script src="../dist/js/scripts.js"></script>
+<script src="../dist/js/custom.js"></script>
+<script src="../dist/js/demo.js"></script>
+</body>
+</html>

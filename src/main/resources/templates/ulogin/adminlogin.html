@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登录</title>
+
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="../css/login.css">
+
+</head>
+<body>
+<div class="wrap">
+    <div class="container">
+
+        <div class="form-group">
+            <div class="cont_form_login"><a href="#"><i class="material-icons"></i></a>
+                <h1 style="color: white; margin: 0; text-align: center">管理员登录</h1>
+
+                <form action="/userlogin/adminlogin" method="post">
+                    <label><input id="adminname" name="adminname" class="form-control" type="text" placeholder="用户名"/></label>
+                    <label><input id="adminpwd" name="adminpwd" class="form-control" type="password" placeholder="密码" /></label>
+
+                    <input class="btn_login" type="submit" value="登录"/>
+
+                </form>
+            </div>
+
+        </div>
+        <p class="change_link" style="text-align: center">
+            <span class="text">学生入口</span>
+            <a href="/studentlogin" class="to_login"> Go </a>
+        </p>
+        <p class="change_link" style="text-align: center">
+            <span class="text">教师入口</span>
+            <a href="/teacherlogin" class="to_login"> Go </a>
+        </p>
+    </div>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+</body>
+</html>

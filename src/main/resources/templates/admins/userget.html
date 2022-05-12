@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+    <title>管理员</title>
+
+
+
+    <script src="../dist/modules/jquery.min.js"></script>
+    <script src="../dist/modules/popper.js"></script>
+    <script src="../dist/modules/tooltip.js"></script>
+    <script src="../dist/modules/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../dist/modules/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="../dist/modules/scroll-up-bar/dist/scroll-up-bar.min.js"></script>
+    <script src="../dist/js/sa-functions.js"></script>
+
+    <script src="../dist/modules/chart.min.js"></script>
+    <script src="../dist/modules/summernote/summernote-lite.js"></script>
+
+    <link rel="stylesheet" href="../dist/modules/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/modules/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="../dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
+
+    <link rel="stylesheet" href="../dist/modules/summernote/summernote-lite.css">
+    <link rel="stylesheet" href="../dist/modules/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../dist/css/demo.css">
+    <link rel="stylesheet" href="../dist/css/style.css">
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+
+
+</head>
+
+<body>
+<div id="app">
+    < class="main-wrapper">
+    <div class="navbar-bg"></div>
+    <nav class="navbar navbar-expand-lg main-navbar">
+
+
+        <form class="form-inline mr-auto">
+            <ul class="navbar-nav mr-3">
+                <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
+            </ul>
+            <div  id="searchuser" class="search-element">
+                <input id="username" v-model="username" class="form-control" type="text" placeholder="查询用户" aria-label="username">
+                <button class="btn btn-info" type="submit" @click="searchuser"><i class="ion ion-search"></i></button>
+            </div>
+        </form>
+    </nav>
+
+    <div class="main-sidebar">
+        <aside id="sidebar-wrapper">
+
+            <div class="sidebar-brand">
+                <a>个人信息管理系统</a>
+            </div>
+
+            <div class="sidebar-user">
+                <div class="sidebar-user-picture">
+                    <img alt="image" src="../dist/img/avatar/avatar-1.jpeg">
+                </div>
+                <div class="sidebar-user-details">
+                    <div class="user-name">
+                        <span id="name"></span>
+                    </div>
+                    <div class="user-role">
+                        管理员
+                    </div>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="/graph/showadmin"><i class="ion ion-ios-circle-outline"></i>首页</a></li>
+                <li>
+                    <a href="#" class="has-dropdown"><i class="ion ion-ios-copy-outline"></i><span>用户管理</span></a>
+                    <ul class="menu-dropdown">
+                        <li><a href="/userlogin/allusers"><i class="ion ion-ios-circle-outline"></i> 用户列表</a></li>
+                        <li><a href="/userlogin/alluser"><i class="ion ion-ios-circle-outline"></i> 重置密码</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="has-dropdown"><i class="ion ion-ios-copy-outline"></i><span>节点管理</span></a>
+                    <ul class="menu-dropdown">
+                        <li><a href="/admin/stlist"><i class="ion ion-ios-circle-outline"></i> 学生管理</a></li>
+                        <li><a href="/admin/telist"><i class="ion ion-ios-circle-outline"></i> 教师管理</a></li>
+                        <li><a href="/admin/colist"><i class="ion ion-ios-circle-outline"></i> 课程管理</a></li>
+                        <li><a href="/admin/delist"><i class="ion ion-ios-circle-outline"></i> 部门管理</a></li>
+                        <li><a href="/admin/malist"><i class="ion ion-ios-circle-outline"></i> 专业管理</a></li>
+                        <li><a href="/admin/sclist"><i class="ion ion-ios-circle-outline"></i> 学校管理</a></li>
+                        <li><a href="/admin/pllist"><i class="ion ion-ios-circle-outline"></i> 籍贯管理</a></li>
+                    </ul>
+                </li>
+                <li><a href="/userlogin/userlist"><i class="ion ion-ios-circle-outline"></i>重置密码</a></li>
+                <li><a href="http://localhost:8080/repassword"><i class="ion ion-ios-circle-outline"></i>修改密码</a></li>
+                <li><a href="/userlogin/logout"><i class="ion ion-ios-circle-outline"></i>退出系统</a></li>
+
+            </ul>
+
+        </aside>
+    </div>
+
+    <div class="main-content">
+        <section class="section">
+            <h1 class="section-header">
+                <div>用户信息</div>
+            </h1>
+
+            <div class="card">
+                <div class="card-body">
+                    <div
+                            class="table-responsive" style="text-align: center">
+                        <table  class="table table-striped">
+                            <tr>
+                                <td>用户id</td>
+                                <td>用户名</td>
+                                <td>用户所属学校</td>
+                                <td>用户学号</td>
+                                <td>用户类型</td>
+                            </tr>
+                            <!--使用thymeleaf 循环标签 取model中的数据 填充表格      -->
+                            <tr>
+                                <td th:text="${user.usid}"></td>
+                                <td th:text="${user.username}"></td>
+                                <td th:text="${user.userschool}"></td>
+                                <td th:text="${user.usernum}"></td>
+                                <td th:switch="${user.type}">
+                                    <div th:case="2" th:text="教师"></div>
+                                    <div th:case="1" th:text="学生"></div>
+                                    <div th:case="3" th:text="管理员"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</div>
+<script>
+    $(".nav li").click(function () {
+        $(this).css({"backgroundColor":"#eeeeee","border-bottom":"3px solid #2aabd2"});
+        $(this).siblings().css({"backgroundColor":"#333333","border-bottom":"0px"});
+    })
+
+    $.getJSON('/userlogin/getUserName',
+        function(data) {
+            $('#name').html(data.Username);
+        });
+</script>
+<script>
+    var vue=new Vue({
+        el:"#searchuser",
+        data:{
+            username:""
+        },
+        methods:{
+            searchuser:function () {
+                if(this.username!==''){window.open('http://localhost:8080/userlogin/getuser?username='+this.username);}
+                else{alert("请输入名称！");}
+            }
+        }
+    })
+</script>
+<script src="../dist/js/scripts.js"></script>
+<script src="../dist/js/custom.js"></script>
+<script src="../dist/js/demo.js"></script>
+</body>
+</html>
+

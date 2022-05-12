@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.information.dao.Stu2plaMapper" >
+  <resultMap id="BaseResultMap" type="com.information.entity.Stu2pla" >
+    <id column="START_ID" property="startId" jdbcType="VARCHAR" />
+    <id column="END_ID" property="endId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    START_ID, END_ID, name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.information.entity.Stu2plaKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from stu2pla
+    where START_ID = #{startId,jdbcType=VARCHAR}
+      and END_ID = #{endId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.information.entity.Stu2plaKey" >
+    delete from stu2pla
+    where START_ID = #{startId,jdbcType=VARCHAR}
+      and END_ID = #{endId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.information.entity.Stu2pla" >
+    insert into stu2pla (START_ID, END_ID, name
+      )
+    values (#{startId,jdbcType=VARCHAR}, #{endId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.information.entity.Stu2pla" >
+    insert into stu2pla
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="startId != null" >
+        START_ID,
+      </if>
+      <if test="endId != null" >
+        END_ID,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="startId != null" >
+        #{startId,jdbcType=VARCHAR},
+      </if>
+      <if test="endId != null" >
+        #{endId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.information.entity.Stu2pla" >
+    update stu2pla
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where START_ID = #{startId,jdbcType=VARCHAR}
+      and END_ID = #{endId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.information.entity.Stu2pla" >
+    update stu2pla
+    set name = #{name,jdbcType=VARCHAR}
+    where START_ID = #{startId,jdbcType=VARCHAR}
+      and END_ID = #{endId,jdbcType=VARCHAR}
+  </update>
+</mapper>

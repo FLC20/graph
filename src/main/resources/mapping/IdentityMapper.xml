@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.information.dao.IdentityMapper" >
+  <resultMap id="BaseResultMap" type="com.information.entity.Identity" >
+    <id column="IDEID" property="ideid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="idname" property="idname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    IDEID, id, idname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from identity
+    where IDEID = #{ideid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from identity
+    where IDEID = #{ideid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.information.entity.Identity" >
+    insert into identity (IDEID, id, idname
+      )
+    values (#{ideid,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{idname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.information.entity.Identity" >
+    insert into identity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ideid != null" >
+        IDEID,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="idname != null" >
+        idname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ideid != null" >
+        #{ideid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="idname != null" >
+        #{idname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.information.entity.Identity" >
+    update identity
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="idname != null" >
+        idname = #{idname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where IDEID = #{ideid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.information.entity.Identity" >
+    update identity
+    set id = #{id,jdbcType=VARCHAR},
+      idname = #{idname,jdbcType=VARCHAR}
+    where IDEID = #{ideid,jdbcType=VARCHAR}
+  </update>
+</mapper>

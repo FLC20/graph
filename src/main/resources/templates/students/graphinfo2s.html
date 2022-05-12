@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<head>
+    <title>个人关系图</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../dist/modules/jquery.min.js"></script>
+    <script src="../dist/modules/popper.js"></script>
+    <script src="../dist/modules/tooltip.js"></script>
+    <script src="../dist/modules/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../dist/modules/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="../dist/modules/scroll-up-bar/dist/scroll-up-bar.min.js"></script>
+    <script src="../dist/js/sa-functions.js"></script>
+
+    <script src="../dist/modules/chart.min.js"></script>
+    <script src="../dist/modules/summernote/summernote-lite.js"></script>
+
+    <link rel="stylesheet" href="../dist/modules/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/modules/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="../dist/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css">
+
+    <link rel="stylesheet" href="../dist/modules/summernote/summernote-lite.css">
+    <link rel="stylesheet" href="../dist/modules/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../dist/css/demo.css">
+    <link rel="stylesheet" href="../dist/css/style.css">
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios.min.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <div class="main-wrapper">
+        <div class="navbar-bg"></div>
+        <nav class="navbar navbar-expand-lg main-navbar">
+            <form class="form-inline mr-auto">
+                <ul class="navbar-nav mr-3">
+                    <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
+                </ul>
+            </form>
+            <div>
+                <!--                <button class="btn btn-outline-dark"><a href="/teacherupdate">点我修改</a></button>-->
+            </div>
+        </nav>
+
+        <div class="main-sidebar">
+            <aside id="sidebar-wrapper">
+
+                <div class="sidebar-brand">
+                    <a>个人信息管理</a>
+                </div>
+
+                <div class="sidebar-user">
+                    <div class="sidebar-user-picture">
+                        <img alt="image" src="../dist/img/avatar/avatar-1.jpeg">
+                    </div>
+
+                    <div class="sidebar-user-details">
+                        <div class="user-name">
+                            <span id="name"></span>
+                        </div>
+                        <div class="user-role">
+                            学生
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="sidebar-menu">
+                    <li><a href="/graph/shows"><i class="ion ion-ios-circle-outline"></i>图谱首页</a></li>
+                    <li><a href="/allstudent/studentinfo"><i class="ion ion-ios-circle-outline"></i>我的信息</a></li>
+                    <li><a href="/graph/showinfos"><i class="ion ion-ios-circle-outline"></i>我的关系</a></li>
+                    <li><a href="#"><i class="ion ion-ios-circle-outline"></i>个人简历</a></li>
+                    <li><a href="http://localhost:8080/repassword"><i class="ion ion-ios-circle-outline"></i>修改密码</a></li>
+                    <li><a href="/userlogin/logout"><i class="ion ion-ios-circle-outline"></i>退出系统</a></li>
+                </ul>
+            </aside>
+        </div>
+
+        <div class="main-content">
+            <section class="section">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive" style="text-align: center">
+
+                            <div id="main" style="width:1400px;height:800px">
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('main'));
+    myChart.showLoading();
+    $.getJSON('/graph/show6', function (nodes) {
+        console.log(nodes);
+        $.getJSON('/graph/show7', function (links) {
+            console.log(links);
+            myChart.hideLoading();
+            var categories = [{
+                "name": "学生"
+            },
+                {
+                    "name": "教师"
+                },
+                {
+                    "name": "课程"
+                },
+                {
+                    "name": "部门"
+                },
+                {
+                    "name": "专业"
+                },
+                {
+                    "name": "地区"
+                },
+                {
+                    "name": "大学"
+                }];
+            option = {
+                // 图的标题
+                title: {
+                    text: '关系图谱'
+                },
+                // 提示框的配置
+                // tooltip: {
+                //     formatter: function (x) {
+                //         return x.data.des;
+                //     }
+                // },
+                // 工具箱
+                tooltip: {
+                    formatter: function (x) {
+                        return x.data.id;
+                    }
+                },
+                toolbox: {
+                    // 显示工具箱
+                    show: true,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        // 还原
+                        restore: {
+                            show: true
+                        },
+                        // 保存为图片
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                legend: [{
+                    // selectedMode: 'single',
+                    data: categories.map(function (a) {
+                        return a.name;
+                    })
+                }],
+                series: [{
+                    type: 'graph', // 类型:关系图
+                    layout: 'force', //图的布局，类型为力导图
+                    symbolSize: 40, // 调整节点的大小
+                    roam: true, // 是否开启鼠标缩放和平移漫游。默认不开启。如果只想要开启缩放或者平移,可以设置成 'scale' 或者 'move'。设置成 true 为都开启
+                    focusNodeAdjacency: true,   // 是否在鼠标移到节点上的时候突出显示节点以及节点的边和邻接节点。[ default: false ]
+
+                    edgeSymbol: ['circle', 'arrow'],
+                    edgeSymbolSize: [2, 6],
+                    edgeLabel: {
+                        normal: {
+                            textStyle: {
+                                fontSize: 10
+                            }
+                        }
+                    },
+                    scaleLimit: {
+                        min: 0.4,
+                        max: 2
+                    },
+                    force: {
+                        repulsion: 20000,
+                        edgeLength: [10, 25]
+                    },
+                    draggable: true,
+                    lineStyle: {
+                        normal: {
+                            width: 2,
+                            color: 'source',
+                            curveness: 0
+                        }
+                    },
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            formatter: function (x) {
+                                return x.data.value;
+                            }
+                        }
+                    },
+                    //隐藏
+                    // labelLayout: {
+                    //          hideOverlap: true
+                    //        },
+                    // label: {
+                    //     normal: {
+                    //         show: true,
+                    //         position: 'right',
+                    //         // formatter: function(param) {        // 标签内容
+                    //         // 	return param.data.category;
+                    //         // },
+                    //     }
+                    // },
+                    label: {
+                        show: true,
+                        position: 'right',
+                        formatter: '{b}'
+                    },
+                    // 数据
+                    data: nodes,
+                    links: links,
+                    categories: categories,
+                }]
+            };
+            myChart.on('click', function(params) {
+                // 控制台打印数据的名称
+                if (params.dataType === 'node') {
+                    console.log(params.data.id);
+                    window.open('http://localhost:8080/graph/getGraph?nodeid=' + encodeURIComponent(params.data.id) + '&nodename=' + encodeURIComponent(params.name));
+                }
+            });
+            myChart.setOption(option); })})
+</script>
+<script>
+    $(".nav li").click(function () {
+        $(this).css({"backgroundColor":"#eeeeee","border-bottom":"3px solid #2aabd2"});
+        $(this).siblings().css({"backgroundColor":"#333333","border-bottom":"0px"});
+    })
+
+    $.getJSON('/userlogin/getUserName',
+        function(data) {
+            $('#name').html(data.Username);
+            console.log(data.Username);
+        });
+</script>
+<script src="../dist/js/scripts.js"></script>
+<script src="../dist/js/custom.js"></script>
+<script src="../dist/js/demo.js"></script>
+</body>
+</html>

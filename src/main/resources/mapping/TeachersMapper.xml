@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.information.dao.TeachersMapper" >
+  <resultMap id="BaseResultMap" type="com.information.entity.Teachers" >
+    <id column="TEID" property="teid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="tenum" property="tenum" jdbcType="VARCHAR" />
+    <result column="te_title" property="teTitle" jdbcType="VARCHAR" />
+    <result column="te_telephone" property="teTelephone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="direction" property="direction" jdbcType="VARCHAR" />
+    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.information.entity.TeachersWithBLOBs" extends="BaseResultMap" >
+    <result column="awards" property="awards" jdbcType="LONGVARCHAR" />
+    <result column="achievements" property="achievements" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TEID, id, name, tenum, te_title, te_telephone, email, direction, postcode
+  </sql>
+  <sql id="Blob_Column_List" >
+    awards, achievements
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from teachers
+    where TEID = #{teid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from teachers
+    where TEID = #{teid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.information.entity.TeachersWithBLOBs" >
+    insert into teachers (TEID, id, name, 
+      tenum, te_title, te_telephone, 
+      email, direction, postcode, 
+      awards, achievements)
+    values (#{teid,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{tenum,jdbcType=VARCHAR}, #{teTitle,jdbcType=VARCHAR}, #{teTelephone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, 
+      #{awards,jdbcType=LONGVARCHAR}, #{achievements,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.information.entity.TeachersWithBLOBs" >
+    insert into teachers
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teid != null" >
+        TEID,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="tenum != null" >
+        tenum,
+      </if>
+      <if test="teTitle != null" >
+        te_title,
+      </if>
+      <if test="teTelephone != null" >
+        te_telephone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="direction != null" >
+        direction,
+      </if>
+      <if test="postcode != null" >
+        postcode,
+      </if>
+      <if test="awards != null" >
+        awards,
+      </if>
+      <if test="achievements != null" >
+        achievements,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teid != null" >
+        #{teid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tenum != null" >
+        #{tenum,jdbcType=VARCHAR},
+      </if>
+      <if test="teTitle != null" >
+        #{teTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="teTelephone != null" >
+        #{teTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null" >
+        #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="awards != null" >
+        #{awards,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="achievements != null" >
+        #{achievements,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.information.entity.TeachersWithBLOBs" >
+    update teachers
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tenum != null" >
+        tenum = #{tenum,jdbcType=VARCHAR},
+      </if>
+      <if test="teTitle != null" >
+        te_title = #{teTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="teTelephone != null" >
+        te_telephone = #{teTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null" >
+        direction = #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="awards != null" >
+        awards = #{awards,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="achievements != null" >
+        achievements = #{achievements,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where TEID = #{teid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.information.entity.TeachersWithBLOBs" >
+    update teachers
+    set id = #{id,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      tenum = #{tenum,jdbcType=VARCHAR},
+      te_title = #{teTitle,jdbcType=VARCHAR},
+      te_telephone = #{teTelephone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      direction = #{direction,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      awards = #{awards,jdbcType=LONGVARCHAR},
+      achievements = #{achievements,jdbcType=LONGVARCHAR}
+    where TEID = #{teid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.information.entity.Teachers" >
+    update teachers
+    set id = #{id,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      tenum = #{tenum,jdbcType=VARCHAR},
+      te_title = #{teTitle,jdbcType=VARCHAR},
+      te_telephone = #{teTelephone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      direction = #{direction,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR}
+    where TEID = #{teid,jdbcType=VARCHAR}
+  </update>
+</mapper>
