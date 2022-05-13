@@ -46,6 +46,10 @@ public class Allstudents {
         this.telephone=telephone;
     }
 
+    public Allstudents() {
+
+    }
+
     public String getStid() {
         return stid;
     }

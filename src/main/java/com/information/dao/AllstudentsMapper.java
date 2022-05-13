@@ -28,4 +28,8 @@ public interface AllstudentsMapper {
     ArrayList<Allstudents> getPage(Page<Allstudents> pages);
 
     Allstudents selectByName(String stuname);
+
+    Allstudents getAll();
+
+    Allstudents selectByNum2(String stunum);
 }

@@ -1,16 +1,26 @@
 package com.information.controcoller;
 
+import cn.hutool.core.date.DateUtil;
 import com.information.entity.*;
 import com.information.service.*;
+import io.swagger.annotations.ApiOperation;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/allstudent")
@@ -27,6 +37,8 @@ public class AllStudentController {
     private SchoolsService schoolsService;
     @Autowired
     private PlaceService placeService;
+    @Autowired
+    private CommonService commonService;
 
     public static String getName(HttpSession session)throws IOException {
         Users userlogin = (Users)session.getAttribute("userlogin");
@@ -129,5 +141,15 @@ public class AllStudentController {
 
         return jsonResult.toString();
     }
+    @GetMapping(value = "/pdf", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ApiOperation(value = "PDF 导出简历", notes = "PDF 导出简历")
+    public ResponseEntity<byte[]> exportPdf2(HttpSession session) throws IOException, JRException {
+        String fileName = "contract" + DateUtil.format(new Date(), "yyyy-MM-dd") + ".pdf";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", fileName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<>(commonService.exportPdf2(getName(session)), headers, HttpStatus.OK);
+    }
+
 
 }

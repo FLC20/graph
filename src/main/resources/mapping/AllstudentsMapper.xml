@@ -50,6 +50,17 @@
     <include refid="Base_Column_List" />
     from allstudents
   </select>
+  <select id="getAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from allstudents
+  </select>
+  <select id="selectByNum2" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from allstudents
+    where stunum = #{stunum}
+  </select>
 
 
 

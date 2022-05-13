@@ -25,6 +25,26 @@ public class Allteachers {
 
     private String major;
 
+    private String awards;
+
+    private String achievements;
+
+    public String getAwards() {
+        return awards;
+    }
+
+    public void setAwards(String awards) {
+        this.awards = awards == null ? null : awards.trim();
+    }
+
+    public String getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(String achievements) {
+        this.achievements = achievements == null ? null : achievements.trim();
+    }
+
     public Allteachers(String teid, String teName, String school, String teNum, String teTitle,
                        String department, String teTelephone, String email, String postcode,
                        String teIdentity, String major, String awards, String achievements) {
@@ -43,6 +63,10 @@ public class Allteachers {
 //
 //               this.awards = awards;
 //               this.achievements = achievements;
+    }
+
+    public Allteachers() {
+
     }
 
     public String getTeid() {

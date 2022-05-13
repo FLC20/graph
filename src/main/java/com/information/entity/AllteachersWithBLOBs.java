@@ -14,6 +14,10 @@ public class AllteachersWithBLOBs extends Allteachers {
         this.achievements=achievements;
     }
 
+    public AllteachersWithBLOBs() {
+
+    }
+
     public String getAwards() {
         return awards;
     }

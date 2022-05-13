@@ -72,7 +72,7 @@
                     <li><a href="/graph/shows"><i class="ion ion-ios-circle-outline"></i>图谱首页</a></li>
                     <li><a href="/allstudent/studentinfo"><i class="ion ion-ios-circle-outline"></i>我的信息</a></li>
                     <li><a href="/graph/showinfos"><i class="ion ion-ios-circle-outline"></i>我的关系</a></li>
-                    <li><a href="#"><i class="ion ion-ios-circle-outline"></i>个人简历</a></li>
+                    <li><a href="/allstudent/pdf"><i class="ion ion-ios-circle-outline"></i>个人简历</a></li>
                     <li><a href="http://localhost:8080/repassword"><i class="ion ion-ios-circle-outline"></i>修改密码</a></li>
                     <li><a href="/userlogin/logout"><i class="ion ion-ios-circle-outline"></i>退出系统</a></li>
                 </ul>
@@ -106,13 +106,20 @@
                                     <td>政治面貌</td>
                                     <td>民族</td>
                                     <td>籍贯</td>
-                                    <td>电话</td>
-                                    <td>CET水平</td>
+
                                 </tr>
                                 <tr  th:each="student,iterStat : ${allstudent}">
                                     <td th:text="${student.place}"></td>
                                     <td th:text="${student.political}"></td>
                                     <td th:text="${student.nation}"></td>
+                                </tr>
+                            </table>
+                            <table  class="table table-striped">
+                                <tr>
+                                    <td>电话</td>
+                                    <td>CET水平</td>
+                                </tr>
+                                <tr  th:each="student,iterStat : ${allstudent}">
                                     <td th:text="${student.telephone}"></td>
                                     <td th:text="${student.lauguageAbility}"></td>
                                 </tr>
@@ -129,6 +136,9 @@
                                     <td th:text="${student.major}"></td>
                                 </tr>
                             </table>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-dark"><a href="/allstudent/pdf">生成个人信息简历</a></button>
                         </div>
                     </div>
                 </div>
