@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<html lang="en">
 <head>
     <title>个人关系图</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
@@ -38,10 +38,11 @@
                 <ul class="navbar-nav mr-3">
                     <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
                 </ul>
+                <div  id="searchNode" class="search-element">
+                    <input id="nodename" v-model="nodename" class="form-control" type="text" placeholder="查询节点" aria-label="nodename">
+                    <button class="btn btn-info" type="submit" @click="searchNode"><i class="ion ion-search"></i></button>
+                </div>
             </form>
-            <div>
-                <!--                <button class="btn btn-outline-dark"><a href="/teacherupdate">点我修改</a></button>-->
-            </div>
         </nav>
 
         <div class="main-sidebar">
@@ -252,6 +253,20 @@
             $('#name').html(data.Username);
             console.log(data.Username);
         });
+</script>
+<script>
+    var vue=new Vue({
+        el:"#searchNode",
+        data:{
+            nodename:""
+        },
+        methods:{
+            searchNode:function () {
+                if(this.nodename!==''){window.open('http://localhost:8080/graph/getGraph2Show?nodename='+this.nodename);}
+                else{alert("请输入名称！");}
+            }
+        }
+    })
 </script>
 <script src="../dist/js/scripts.js"></script>
 <script src="../dist/js/custom.js"></script>

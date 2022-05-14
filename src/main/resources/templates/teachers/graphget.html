@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>关系图</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
@@ -39,6 +39,10 @@
                     <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
                     <!--                    <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="ion ion-search"></i></a></li>-->
                 </ul>
+                <div  id="searchNode" class="search-element">
+                    <input id="nodename1" v-model="nodename1" class="form-control" type="text" placeholder="查询节点" aria-label="nodename1">
+                    <button class="btn btn-info" type="submit" @click="searchNode"><i class="ion ion-search"></i></button>
+                </div>
             </form>
         </nav>
 
@@ -59,36 +63,17 @@
                             <span id="name"></span>
                         </div>
                         <div class="user-role" >
-                            管理员
+                            教师
                         </div>
                     </div>
                 </div>
                 <ul class="sidebar-menu">
-                    <li><a href="/graph/showadmin"><i class="ion ion-ios-circle-outline"></i>首页</a></li>
-                    <li>
-                        <a href="#" class="has-dropdown"><i class="ion ion-ios-copy-outline"></i><span>用户管理</span></a>
-                        <ul class="menu-dropdown">
-                            <li><a href="/userlogin/allusers"><i class="ion ion-ios-circle-outline"></i> 用户列表</a></li>
-                            <li><a href="/userlogin/alluser"><i class="ion ion-ios-circle-outline"></i> 重置密码</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#" class="has-dropdown"><i class="ion ion-ios-copy-outline"></i><span>节点管理</span></a>
-                        <ul class="menu-dropdown">
-                            <li><a href="/admin/stlist"><i class="ion ion-ios-circle-outline"></i> 学生管理</a></li>
-                            <li><a href="/admin/telist"><i class="ion ion-ios-circle-outline"></i> 教师管理</a></li>
-                            <li><a href="/admin/colist"><i class="ion ion-ios-circle-outline"></i> 课程管理</a></li>
-                            <li><a href="/admin/delist"><i class="ion ion-ios-circle-outline"></i> 部门管理</a></li>
-                            <li><a href="/admin/malist"><i class="ion ion-ios-circle-outline"></i> 专业管理</a></li>
-                            <li><a href="/admin/sclist"><i class="ion ion-ios-circle-outline"></i> 学校管理</a></li>
-                            <li><a href="/admin/pllist"><i class="ion ion-ios-circle-outline"></i> 籍贯管理</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/userlogin/userlist"><i class="ion ion-ios-circle-outline"></i>重置密码</a></li>
+                    <li><a href="/graph/show"><i class="ion ion-ios-circle-outline"></i>图谱首页</a></li>
+                    <li><a href="/allteacher/teacherinfo"><i class="ion ion-ios-circle-outline"></i>我的信息</a></li>
+                    <li><a href="/graph/showinfo"><i class="ion ion-ios-circle-outline"></i>我的关系</a></li>
+                    <li><a href="/allteacher/pdf"><i class="ion ion-ios-circle-outline"></i>生成简历</a></li>
                     <li><a href="http://localhost:8080/repassword"><i class="ion ion-ios-circle-outline"></i>修改密码</a></li>
                     <li><a href="/userlogin/logout"><i class="ion ion-ios-circle-outline"></i>退出系统</a></li>
-
                 </ul>
             </aside>
         </div>
@@ -289,6 +274,20 @@
             $('#name').html(data.Username);
             console.log(data.Username);
         });
+</script>
+<script>
+    var vue=new Vue({
+        el:"#searchNode",
+        data:{
+            nodename1:""
+        },
+        methods:{
+            searchNode:function () {
+                if(this.nodename1!==''){window.open('http://localhost:8080/graph/getGraph2Show?nodename='+this.nodename1);}
+                else{alert("请输入名称！");}
+            }
+        }
+    })
 </script>
 <script src="../dist/js/scripts.js"></script>
 <script src="../dist/js/custom.js"></script>

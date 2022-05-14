@@ -39,6 +39,12 @@ public class GraphController {
     @Autowired
     private CourseService courseService;
 
+    public static String getName(HttpSession session)throws IOException {
+        Users userlogin = (Users)session.getAttribute("userlogin");
+        System.out.println("username:"+userlogin.getUsername());
+
+        return userlogin.getUsername();
+    }
     //教师
     //全部图谱
     @RequestMapping("/show")
@@ -81,14 +87,20 @@ public class GraphController {
     }
     //查询节点及其图谱
     @RequestMapping("/getGraph2Show")
-    public String getGraph2Show(String nodename,Model model){
+    public String getGraph2Show(String nodename,Model model,HttpSession httpSession) throws IOException {
         if(allnodesService.selectNodeByName(nodename)!=null) {
             //查询此节点
             Allnodes allnodes = allnodesService.selectNodeByName(nodename);
             System.out.println(allnodes.getName());
             model.addAttribute("nodes", allnodes);
             //返回此节点信息
-            return "/admins/graphget";
+            String username=getName(httpSession);
+            Users users=usersService.selectTnumByTname(username);
+            int type=users.getType();
+            if(type==1){return "/students/graphget";}
+            else if(type==2){return "/teachers/graphget";}
+            else if(type==3){return "/admins/graphget";}
+            else {return "/404";}
         }
         else {
             return "/404";

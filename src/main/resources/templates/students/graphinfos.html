@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<html lang="en">
 <head>
     <title>个人关系图</title>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+
 
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <script src="../dist/modules/jquery.min.js"></script>
@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="../dist/css/style.css">
     <script src="../js/vue.js"></script>
     <script src="../js/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
 </head>
 
 <body>
@@ -38,6 +39,10 @@
                 <ul class="navbar-nav mr-3">
                     <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
                 </ul>
+                <div  id="searchNode" class="search-element">
+                    <input id="nodename" v-model="nodename" class="form-control" type="text" placeholder="查询节点" aria-label="nodename">
+                    <button class="btn btn-info" type="submit" @click="searchNode"><i class="ion ion-search"></i></button>
+                </div>
             </form>
             <div>
                 <button class="btn btn-outline-dark"><a href="/graph/graphinfo2s">展开</a></button>
@@ -253,6 +258,20 @@
             $('#name').html(data.Username);
             console.log(data.Username);
         });
+</script>
+<script>
+    var vue=new Vue({
+        el:"#searchNode",
+        data:{
+            nodename:""
+        },
+        methods:{
+            searchNode:function () {
+                if(this.nodename!==''){window.open('http://localhost:8080/graph/getGraph2Show?nodename='+this.nodename);}
+                else{alert("请输入名称！");}
+            }
+        }
+    })
 </script>
 <script src="../dist/js/scripts.js"></script>
 <script src="../dist/js/custom.js"></script>
